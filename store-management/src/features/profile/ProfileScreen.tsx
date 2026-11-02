@@ -2,6 +2,8 @@ import { router } from "expo-router";
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { useAuth } from "../auth/AuthContext";
+import { AppButton } from "../../components/AppButton";
+import { MenuItem } from "./components/MenuItem";
 
 export function ProfileScreen() {
   const { user, logout } = useAuth();
@@ -40,7 +42,7 @@ export function ProfileScreen() {
         {user.nameStore}
       </Text> 
 
-      <Text style={styles.name}>Email: {user.email}</Text>
+      <Text style={styles.info}>Email: {user.email}</Text>
       <Text style={styles.info}>Address: {user.address}</Text>
       <Text style={styles.info}>Phone Number: {user.phoneNumber}</Text>
       <Text style={styles.info}>Business Hours: {user.businessHours}</Text>
@@ -48,17 +50,18 @@ export function ProfileScreen() {
       <Text style={styles.sectionTitle}>Menu</Text>
 
       {user.menus.map((menu) => (
-        <View key={menu.id} style={styles.menuCard}>
-          <Text style={styles.menuTitle}>
-            {menu.title}
-          </Text>
-          <Text>Price: {menu.price}</Text>
-        </View>
+        <MenuItem
+          key={menu.id}
+          menu={menu}
+        />
       ))}
 
-      <Pressable style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </Pressable>
+    <AppButton
+      label="Logout"
+      onPress={handleLogout}
+      variant="danger"
+    />
+
     </ScrollView>
   );
 }
@@ -79,10 +82,6 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     alignSelf: "center",
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "700",
   },
   info: {
     fontSize: 16,

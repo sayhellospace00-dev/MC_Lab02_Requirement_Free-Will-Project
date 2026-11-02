@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { router } from "expo-router";
 import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
+import { FormInput } from "../../components/FormInput";
+import { AppButton } from "../../components/AppButton";
 
 import { useAuth } from "./AuthContext";
 
@@ -43,30 +45,26 @@ export function LoginScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Store Management</Text>
 
-      <TextInput
-        placeholder="Username"
+      <FormInput
+        label="Username"
+        placeholder="Enter username"
         value={username}
         onChangeText={setUsername}
-        autoCapitalize="none"
-        style={styles.input}
       />
-      <TextInput
-        placeholder="Password"
+
+      <FormInput
+        label="Password"
+        placeholder="Enter password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
       />
 
-      <Pressable
+      <AppButton
+        label={loading ? "Checking..." : "Login"}
         onPress={handleLogin}
         disabled={loading}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "Checking..." : "Login"}
-        </Text>
-      </Pressable>
+      />
 
       {error ? (
         <Text style={styles.error}>{error}</Text>

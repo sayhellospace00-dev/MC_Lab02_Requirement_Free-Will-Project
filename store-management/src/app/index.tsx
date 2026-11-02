@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import { DEMO_ACCOUNT } from "../features/auth/data/demoAccount";
 
 export default function Index() {
   const [username, setUsername] = useState("");
@@ -7,16 +8,11 @@ export default function Index() {
   const [message, setMessage] = useState("");
   
   function handleLogin() {
-    if (!username || !password) {
-      setMessage("Please enter username and password.");
-      return;
-    }
+    const isValid = username === DEMO_ACCOUNT.username && password === DEMO_ACCOUNT.password;
 
-    if (username === "store01" && password === "123456") {
-      setMessage("Login successful!");
-    } else {
-      setMessage("Invalid username or password.");
-    }
+    setMessage(
+      isValid ? "Login successful!" : "Invalid username or password."
+    );
   }
 
   return (

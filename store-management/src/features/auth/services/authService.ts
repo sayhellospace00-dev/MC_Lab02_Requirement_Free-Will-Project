@@ -1,13 +1,15 @@
 import { DEMO_ACCOUNT } from "../data/demoAccount";
+import type { StoreProfile } from "../types";
 
-export async function checkLogin(
+export async function loginWithUsernamePassword(
   username: string,
   password: string
-): Promise<boolean> {
+): Promise<StoreProfile | null> {
   await new Promise((resolve) => setTimeout(resolve, 500));
 
-  return (
+  const valid =
     username === DEMO_ACCOUNT.username &&
-    password === DEMO_ACCOUNT.password
-  );
+    password === DEMO_ACCOUNT.password;
+
+  return valid ? DEMO_ACCOUNT.profile : null;
 }

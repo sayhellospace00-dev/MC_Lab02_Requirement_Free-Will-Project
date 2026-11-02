@@ -1,8 +1,8 @@
 import { Image, ScrollView, Text, View } from "react-native";
 
 const PROFILE = {
-  nameStore: "Lupin Bar",
   storeId: "LB001",
+  nameStore: "Lupin Bar",
   email: "xxx@gmail.com",
   address: "xxx, XXX, xxx",
   phoneNumber: "xxxx xxxx xx",

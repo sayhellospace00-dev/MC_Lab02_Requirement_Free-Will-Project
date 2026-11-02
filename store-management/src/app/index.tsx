@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { router } from "expo-router";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { checkLogin } from "../features/auth/services/authService";
+import { loginWithUsernamePassword } from "../features/auth/services/authService";
 
 
 export default function Index() {
@@ -10,15 +10,31 @@ export default function Index() {
   const [message, setMessage] = useState("");
   
   async function handleLogin() {
-    setMessage("Checking...");
-
-    const success = await checkLogin(username, password);
-
-    if (!success) {
-      setMessage("Invalid username or password.");
+    if (!username.trim() || !password) {
+      setMessage("Please enter username and password.");
       return;
     }
-    router.replace("/profile");
+
+    setMessage("Checking...");
+
+    try {
+      const profile = await loginWithUsernamePassword(
+        username,
+        password
+      );
+
+      if (!profile) {
+        setMessage("Invalid username or password.");
+        return;
+      }
+
+      setMessage("Login successful!");
+
+      router.replace("/profile");
+    } catch (error) {
+      console.error("Login error:", error);
+      setMessage("Login failed. Please try again.");
+    }
   }
 
   return (

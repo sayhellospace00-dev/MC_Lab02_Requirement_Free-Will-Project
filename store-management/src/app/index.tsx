@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { DEMO_ACCOUNT } from "../features/auth/data/demoAccount";
+import { checkLogin } from "../features/auth/services/authService";
 
 export default function Index() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   
-  function handleLogin() {
-    const isValid = username === DEMO_ACCOUNT.username && password === DEMO_ACCOUNT.password;
+  async function handleLogin() {
+    setMessage("Checking...");
+
+    const success = await checkLogin(username, password);
 
     setMessage(
-      isValid ? "Login successful!" : "Invalid username or password."
+      success ? "Login successful!" : "Invalid username or password."
     );
   }
 
